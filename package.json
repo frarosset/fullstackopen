@@ -1,0 +1,22 @@
+{
+  "name": "fullstackopen",
+  "version": "1.0.0",
+  "description": "Exercises for the Full Stack Open course",
+  "homepage": "https://github.com/frarosset/fullstackopen#readme",
+  "bugs": {
+    "url": "https://github.com/frarosset/fullstackopen/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frarosset/fullstackopen.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "workspaces": [
+    "part*/*/"
+  ]
+}

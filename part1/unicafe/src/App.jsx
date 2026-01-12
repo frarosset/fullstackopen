@@ -9,15 +9,9 @@ const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>;
 
 const giveFeedback = (setFeedback) => () => setFeedback((val) => val + 1);
 
-const FeedbackCount = ({ feedback, count }) => (
+const StatisticLine = ({ text, value }) => (
   <div>
-    {feedback} {count}
-  </div>
-);
-
-const FeedbackStat = ({ stat, value }) => (
-  <div>
-    {stat} {value}
+    {text} {value}
   </div>
 );
 
@@ -41,13 +35,13 @@ const Statistics = ({ good, neutral, bad }) => {
   return (
     <div>
       {titleComponent}
-      <FeedbackCount feedback="good" count={good} />
-      <FeedbackCount feedback="neutral" count={neutral} />
-      <FeedbackCount feedback="bad" count={bad} />
+      <StatisticLine text="good" value={good} />
+      <StatisticLine text="neutral" value={neutral} />
+      <StatisticLine text="bad" value={bad} />
 
-      <FeedbackStat stat="all" value={all} />
-      <FeedbackStat stat="average" value={average} />
-      <FeedbackStat stat="positive" value={`${positive} %`} />
+      <StatisticLine text="all" value={all} />
+      <StatisticLine text="average" value={average} />
+      <StatisticLine text="positive" value={`${positive} %`} />
     </div>
   );
 };

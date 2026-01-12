@@ -15,11 +15,21 @@ const FeedbackCount = ({ feedback, count }) => (
   </div>
 );
 
+const FeedbackStat = ({ stat, value }) => (
+  <div>
+    {stat} {value}
+  </div>
+);
+
 const App = () => {
   // save clicks of each button to its own state
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
+
+  const all = good + neutral + bad;
+  const average = (good - bad) / all; // = (good * 1 + neutral * 0 + bad * -1) / all;
+  const positive = (good / all) * 100;
 
   return (
     <div>
@@ -36,6 +46,10 @@ const App = () => {
         <FeedbackCount feedback="good" count={good} />
         <FeedbackCount feedback="neutral" count={neutral} />
         <FeedbackCount feedback="bad" count={bad} />
+
+        <FeedbackStat stat="all" value={all} />
+        <FeedbackStat stat="average" value={average} />
+        <FeedbackStat stat="positive" value={`${positive} %`} />
       </div>
     </div>
   );

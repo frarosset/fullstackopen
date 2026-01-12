@@ -23,12 +23,24 @@ const FeedbackStat = ({ stat, value }) => (
 
 const Statistics = ({ good, neutral, bad }) => {
   const all = good + neutral + bad;
+
+  const titleComponent = <Title text="statistics" level={2} />;
+
+  if (all == 0) {
+    return (
+      <div>
+        {titleComponent}
+        <div>No feedback given</div>
+      </div>
+    );
+  }
+
   const average = (good - bad) / all; // = (good * 1 + neutral * 0 + bad * -1) / all;
   const positive = (good / all) * 100;
 
   return (
     <div>
-      <Title text="statistics" level={2} />
+      {titleComponent}
       <FeedbackCount feedback="good" count={good} />
       <FeedbackCount feedback="neutral" count={neutral} />
       <FeedbackCount feedback="bad" count={bad} />

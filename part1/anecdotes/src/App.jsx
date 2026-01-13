@@ -19,12 +19,21 @@ function getRandomAnecdoteIdx() {
   return getRandomInteger(anecdotes.length - 1);
 }
 
+function initVotes() {
+  return Array(anecdotes.length).fill(0);
+}
+
 const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>;
+
+const AnecdoteVote = ({ votes, selected }) => (
+  <p>has {votes[selected]} votes</p>
+);
 
 const App = () => {
   // Initialize with random anecdote: pass a function to useState hook
   // to avoid executing the intialization function at each re-render
   const [selected, setSelected] = useState(() => getRandomAnecdoteIdx());
+  const [votes, setVotes] = useState(() => initVotes());
 
   const updateSelected = () => {
     let newSelected = getRandomAnecdoteIdx();
@@ -37,10 +46,20 @@ const App = () => {
     setSelected(newSelected);
   };
 
+  const vote = () => {
+    const copiedVotes = [...votes];
+    copiedVotes[selected]++;
+    setVotes(copiedVotes);
+  };
+
   return (
     <div>
       <p>{anecdotes[selected]}</p>
-      <Button onClick={updateSelected} text="next anecdote" />
+      <AnecdoteVote votes={votes} selected={selected} />
+      <div>
+        <Button onClick={vote} text="vote" />
+        <Button onClick={updateSelected} text="next anecdote" />
+      </div>
     </div>
   );
 };

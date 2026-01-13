@@ -25,9 +25,31 @@ function initVotes() {
 
 const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>;
 
-const AnecdoteVote = ({ votes, selected }) => (
+const AnecdoteVote = ({ selected, votes }) => (
   <p>has {votes[selected]} votes</p>
 );
+
+const Anecdote = ({ selected, votes }) => (
+  <div>
+    <p>{anecdotes[selected]}</p>
+    <AnecdoteVote selected={selected} votes={votes} />
+  </div>
+);
+
+const MostVotedAnecdote = ({ votes }) => {
+  const maxVotes = Math.max(...votes);
+
+  if (maxVotes === 0)
+    return (
+      <div>
+        <p>There are no voted anecdotes yet</p>
+      </div>
+    );
+
+  const mostVoted = votes.indexOf(maxVotes);
+
+  return <Anecdote selected={mostVoted} votes={votes} />;
+};
 
 const App = () => {
   // Initialize with random anecdote: pass a function to useState hook
@@ -54,12 +76,16 @@ const App = () => {
 
   return (
     <div>
-      <p>{anecdotes[selected]}</p>
-      <AnecdoteVote votes={votes} selected={selected} />
+      <h1>Anecdote of the day</h1>
+      <Anecdote selected={selected} votes={votes} />
+
       <div>
         <Button onClick={vote} text="vote" />
         <Button onClick={updateSelected} text="next anecdote" />
       </div>
+
+      <h2>Anecdote with most votes</h2>
+      <MostVotedAnecdote votes={votes} />
     </div>
   );
 };

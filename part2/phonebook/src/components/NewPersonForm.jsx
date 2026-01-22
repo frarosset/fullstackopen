@@ -25,7 +25,10 @@ const NewPersonForm = ({ persons, setPersons }) => {
       return;
     }
 
-    setPersons((persons) => [...persons, { name: newName, number: newNumber }]);
+    setPersons((persons) => [
+      ...persons,
+      { name: newName.trim(), number: newNumber.trim() },
+    ]);
     setNewName("");
     setNewNumber("");
   };

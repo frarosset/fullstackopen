@@ -10,7 +10,10 @@ const App = () => {
     { name: "Dan Abramov", number: "12-43-234345", id: 3 },
     { name: "Mary Poppendieck", number: "39-23-6423122", id: 4 },
   ]);
+
   // newName, setNewName state moved to NewPersonForm: they are only used within it
+  // the event handlers that are used only within a component have been moved in there
+  // see ./components/NewPersonForm.jsx and ./components/SearchFilter.jsx
 
   const [search, setSearch] = useState("");
 
@@ -24,10 +27,13 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+
       <SearchFilter search={search} setSearch={setSearch} />
-      <h2>add a new</h2>
+
+      <h3>add a new</h3>
       <NewPersonForm persons={persons} setPersons={setPersons} />
-      <h2>Numbers</h2>
+
+      <h3>Numbers</h3>
       <Persons persons={personsToShow} />
     </div>
   );

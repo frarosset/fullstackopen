@@ -1,21 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SearchFilter from "./components/SearchFilter";
 import NewPersonForm from "./components/NewPersonForm";
 import Persons from "./components/Persons";
+import axios from "axios";
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: "Arto Hellas", number: "040-123456", id: 1 },
-    { name: "Ada Lovelace", number: "39-44-5323523", id: 2 },
-    { name: "Dan Abramov", number: "12-43-234345", id: 3 },
-    { name: "Mary Poppendieck", number: "39-23-6423122", id: 4 },
-  ]);
+  const [persons, setPersons] = useState([]);
 
   // newName, setNewName state moved to NewPersonForm: they are only used within it
   // the event handlers that are used only within a component have been moved in there
   // see ./components/NewPersonForm.jsx and ./components/SearchFilter.jsx
 
   const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/persons").then((response) => {
+      setPersons(response.data);
+    });
+  }, []);
 
   const personsToShow =
     search != ""

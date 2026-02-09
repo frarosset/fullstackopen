@@ -18,5 +18,11 @@
   },
   "workspaces": [
     "part*/*/"
-  ]
+  ],
+  "dependencies": {
+    "axios": "^1.13.5"
+  },
+  "devDependencies": {
+    "json-server": "^1.0.0-beta.5"
+  }
 }

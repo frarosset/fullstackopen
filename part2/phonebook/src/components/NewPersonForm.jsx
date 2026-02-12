@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ControlledInput from "./ControlledInput";
 
-const NewPersonForm = ({ persons, setPersons }) => {
+const NewPersonForm = ({ persons, addPerson }) => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
 
@@ -25,12 +25,12 @@ const NewPersonForm = ({ persons, setPersons }) => {
       return;
     }
 
-    setPersons((persons) => [
-      ...persons,
-      { name: newName.trim(), number: newNumber.trim() },
-    ]);
-    setNewName("");
-    setNewNumber("");
+    const newPerson = { name: newName.trim(), number: newNumber.trim() };
+
+    addPerson(newPerson).then(() => {
+      setNewName("");
+      setNewNumber("");
+    });
   };
 
   return (

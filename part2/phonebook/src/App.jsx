@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import SearchFilter from "./components/SearchFilter";
 import NewPersonForm from "./components/NewPersonForm";
 import Persons from "./components/Persons";
-import axios from "axios";
+import personServices from "./services/persons.js";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -14,10 +14,15 @@ const App = () => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:3001/persons").then((response) => {
-      setPersons(response.data);
+    personServices.getAll().then((persons) => {
+      setPersons(persons);
     });
   }, []);
+
+  const addPerson = (newPerson) =>
+    personServices.create(newPerson).then((createdPerson) => {
+      setPersons((persons) => [...persons, createdPerson]);
+    }); // returns a promise
 
   const personsToShow =
     search != ""
@@ -33,7 +38,7 @@ const App = () => {
       <SearchFilter search={search} setSearch={setSearch} />
 
       <h3>add a new</h3>
-      <NewPersonForm persons={persons} setPersons={setPersons} />
+      <NewPersonForm persons={persons} addPerson={addPerson} />
 
       <h3>Numbers</h3>
       <Persons persons={personsToShow} />

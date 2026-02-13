@@ -37,11 +37,19 @@ const NewPersonForm = ({ persons, addPerson }) => {
     <form onSubmit={onSubmitHandle}>
       <div>
         name:
-        <ControlledInput value={newName} onChange={onChangeNewNameHandle} />
+        <ControlledInput
+          value={newName}
+          onChange={onChangeNewNameHandle}
+          required={true}
+        />
       </div>
       <div>
         number:
-        <ControlledInput value={newNumber} onChange={onChangeNewNumberHandle} />
+        <ControlledInput
+          value={newNumber}
+          onChange={onChangeNewNumberHandle}
+          required={true}
+        />
       </div>
       <div>
         <button type="submit">add</button>

@@ -1,12 +1,12 @@
 import Person from "./Person.jsx";
 
-const Persons = ({ persons }) =>
+const Persons = ({ persons, removePerson }) =>
   persons.length ? (
     <ul>
       {" "}
       {persons.map((person) => (
         <li key={person.name}>
-          <Person person={person} />
+          <Person person={person} removePerson={removePerson} />
         </li>
       ))}{" "}
     </ul>

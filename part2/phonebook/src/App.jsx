@@ -24,6 +24,20 @@ const App = () => {
       setPersons((persons) => [...persons, createdPerson]);
     }); // returns a promise
 
+  const removePerson = (person) =>
+    personServices
+      .remove(person.id)
+      .catch((e) => {
+        const errorMessage =
+          e.status == 404
+            ? `${person.name} has already been deleted`
+            : `Sorry, an error occurred while deleting ${person.name}`;
+        alert(errorMessage);
+      })
+      .finally(() => {
+        setPersons((persons) => persons.filter((p) => p.id !== person.id));
+      }); // returns a promise
+
   const personsToShow =
     search != ""
       ? persons.filter(
@@ -41,7 +55,7 @@ const App = () => {
       <NewPersonForm persons={persons} addPerson={addPerson} />
 
       <h3>Numbers</h3>
-      <Persons persons={personsToShow} />
+      <Persons persons={personsToShow} removePerson={removePerson} />
     </div>
   );
 };

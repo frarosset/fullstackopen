@@ -1,13 +1,9 @@
 import { useState } from "react";
 import ControlledInput from "./ControlledInput";
 
-const NewPersonForm = ({ persons, addPerson }) => {
+const NewPersonForm = ({ addPerson }) => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
-
-  const newNameAlreadyExists = () => {
-    return persons.some((person) => person.name === newName);
-  };
 
   const onChangeNewNameHandle = (e) => {
     setNewName(e.target.value);
@@ -19,11 +15,6 @@ const NewPersonForm = ({ persons, addPerson }) => {
 
   const onSubmitHandle = (e) => {
     e.preventDefault();
-
-    if (newNameAlreadyExists()) {
-      alert(`${newName} is already added to the phonebook`);
-      return;
-    }
 
     const newPerson = { name: newName.trim(), number: newNumber.trim() };
 

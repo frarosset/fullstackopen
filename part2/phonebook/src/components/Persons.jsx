@@ -5,7 +5,7 @@ const Persons = ({ persons, removePerson }) =>
     <ul>
       {" "}
       {persons.map((person) => (
-        <li key={person.name}>
+        <li key={person.id}>
           <Person person={person} removePerson={removePerson} />
         </li>
       ))}{" "}

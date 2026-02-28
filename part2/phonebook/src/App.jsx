@@ -2,10 +2,13 @@ import { useState, useEffect } from "react";
 import SearchFilter from "./components/SearchFilter";
 import NewPersonForm from "./components/NewPersonForm";
 import Persons from "./components/Persons";
+import Notification from "./components/Notification";
+
 import personServices from "./services/persons.js";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
+  const [notificationMessage, setNotificationMessage] = useState(null);
 
   // newName, setNewName state moved to NewPersonForm: they are only used within it
   // the event handlers that are used only within a component have been moved in there
@@ -21,6 +24,13 @@ const App = () => {
 
   const getPersonWithName = (name) => {
     return persons.find((person) => person.name === name);
+  };
+
+  const setNotification = (message) => {
+    setNotificationMessage(message);
+    setTimeout(() => {
+      setNotificationMessage(null);
+    }, 5000);
   };
 
   const addPerson = (newPerson) => {
@@ -40,6 +50,7 @@ const App = () => {
                 p.id === existingPersonId ? updatedPerson : p,
               ),
             );
+            setNotification(`Updated ${newPerson.name}`);
           })
           .catch((e) => {
             if (e.status == 404) {
@@ -68,6 +79,7 @@ const App = () => {
       .create(newPerson)
       .then((createdPerson) => {
         setPersons((persons) => [...persons, createdPerson]);
+        setNotification(`Added ${newPerson.name}`);
       })
       .catch(() => {
         alert(`Sorry, an error occurred while creating ${newPerson.name}`);
@@ -77,9 +89,10 @@ const App = () => {
   const removePerson = (person) =>
     personServices
       .remove(person.id)
-      .then(() =>
-        setPersons((persons) => persons.filter((p) => p.id !== person.id)),
-      )
+      .then(() => {
+        setPersons((persons) => persons.filter((p) => p.id !== person.id));
+        setNotification(`Removed ${person.name}`);
+      })
       .catch((e) => {
         if (e.status == 404) {
           alert(`${person.name} has already been deleted`);
@@ -99,6 +112,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+
+      <Notification message={notificationMessage} />
 
       <SearchFilter search={search} setSearch={setSearch} />
 

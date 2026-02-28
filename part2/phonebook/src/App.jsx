@@ -50,16 +50,23 @@ const App = () => {
                 p.id === existingPersonId ? updatedPerson : p,
               ),
             );
-            setNotification(`Updated ${newPerson.name}`);
+            setNotification({
+              text: `Updated ${newPerson.name}`,
+              type: "success",
+            });
           })
           .catch((e) => {
             if (e.status == 404) {
-              alert(`${newPerson.name} was not found on the server`);
+              setNotification({
+                text: `Information of ${newPerson.name} has already been removed from server`,
+                type: "error",
+              });
               setPersons(persons.filter((n) => n.id !== existingPersonId));
             } else {
-              alert(
-                `Sorry, an error occurred while deleting ${newPerson.name}`,
-              );
+              setNotification({
+                text: `Sorry, an error occurred while deleting ${newPerson.name}`,
+                type: "error",
+              });
             }
           });
       } else {
@@ -79,10 +86,16 @@ const App = () => {
       .create(newPerson)
       .then((createdPerson) => {
         setPersons((persons) => [...persons, createdPerson]);
-        setNotification(`Added ${newPerson.name}`);
+        setNotification({
+          text: `Added ${newPerson.name}`,
+          type: "success",
+        });
       })
       .catch(() => {
-        alert(`Sorry, an error occurred while creating ${newPerson.name}`);
+        setNotification({
+          text: `Sorry, an error occurred while creating ${newPerson.name}`,
+          type: "error",
+        });
       });
   }; // returns a promise
 
@@ -91,14 +104,23 @@ const App = () => {
       .remove(person.id)
       .then(() => {
         setPersons((persons) => persons.filter((p) => p.id !== person.id));
-        setNotification(`Removed ${person.name}`);
+        setNotification({
+          text: `Removed ${person.name}`,
+          type: "success",
+        });
       })
       .catch((e) => {
         if (e.status == 404) {
-          alert(`${person.name} has already been deleted`);
+          setNotification({
+            text: `${person.name} has already been deleted`,
+            type: "error",
+          });
           setPersons((persons) => persons.filter((p) => p.id !== person.id));
         } else {
-          alert(`Sorry, an error occurred while deleting ${person.name}`);
+          setNotification({
+            text: `Sorry, an error occurred while deleting ${person.name}`,
+            type: "error",
+          });
         }
       });
 

@@ -1,3 +1,5 @@
+import CountryWeather from "./CountryWeather.jsx";
+
 const CountryDetails = ({ data }) => {
   if (data == null) {
     return null;
@@ -22,6 +24,8 @@ const CountryDetails = ({ data }) => {
         src={data.flags.png}
         alt={data.flags.alt}
       />
+
+      <CountryWeather location={data.capital} />
     </div>
   );
 };

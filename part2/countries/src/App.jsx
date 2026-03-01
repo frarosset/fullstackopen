@@ -38,6 +38,11 @@ function App() {
     }
   });
 
+  const onResultShowButtonClick = (country) => () => {
+    console.log(country);
+    setSearch(country);
+  };
+
   return (
     <>
       <div>
@@ -49,7 +54,11 @@ function App() {
           filteredCountries.length == 1 ? (
             <CountryDetails data={allCountries[filteredCountries[0]]} />
           ) : (
-            <CountryMatchList names={filteredCountries} limit={10} />
+            <CountryMatchList
+              names={filteredCountries}
+              limit={10}
+              onResultShowButtonClick={onResultShowButtonClick}
+            />
           )
         ) : (
           <i>Specify a filter</i>
@@ -63,7 +72,11 @@ function App() {
             <h2 style={{ fontSize: "1em" }}>
               Suggested coutries from matched translated names
             </h2>
-            <CountryMatchList names={filteredTranslatedCountries} limit={10} />
+            <CountryMatchList
+              names={filteredTranslatedCountries}
+              limit={10}
+              onResultShowButtonClick={null}
+            />
           </div>
         </>
       ) : null}

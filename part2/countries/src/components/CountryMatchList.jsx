@@ -1,12 +1,16 @@
 import CountryMatchItem from "./CountryMatchItem.jsx";
 
-const CountryMatchList = ({ names, limit = 1000 }) => {
+const CountryMatchList = ({ names, limit = 1000, onResultShowButtonClick }) => {
   if (names.length <= limit) {
     if (names.length > 0) {
       return (
         <ul>
           {names.map((name) => (
-            <CountryMatchItem name={name} key={name} />
+            <CountryMatchItem
+              name={name}
+              key={name}
+              onResultShowButtonClick={onResultShowButtonClick}
+            />
           ))}
         </ul>
       );

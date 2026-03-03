@@ -29,7 +29,37 @@ let persons = [
 app.use(express.json());
 
 // "tiny" : :method :url :status :res[content-length] - :response-time ms
-app.use(morgan("tiny"));
+morgan.token("body", function (req, res) {
+  return JSON.stringify(req.body);
+});
+
+const tinyFormat = (tokens, req, res) =>
+  [
+    tokens.method(req, res),
+    tokens.url(req, res),
+    tokens.status(req, res),
+    tokens.res(req, res, "content-length"),
+    "-",
+    tokens["response-time"](req, res),
+    "ms",
+  ].join(" ");
+
+const tinyBodyFormat = (tokens, req, res) =>
+  `${tinyFormat(tokens, req, res)} ${tokens.body(req, res)}`;
+
+app.use(
+  // This prints the body for all requests
+  morgan(":method :url :status :res[content-length] - :response-time ms :body"),
+
+  // This prints body only for POST requests
+  morgan((tokens, req, res) => {
+    if (req.method == "POST") {
+      return tinyBodyFormat(tokens, req, res);
+    } else {
+      return tinyFormat(tokens, req, res);
+    }
+  }),
+);
 
 app.get("/api/persons", (req, res) => {
   res.json(persons);

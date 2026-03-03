@@ -40,6 +40,20 @@ app.get("/api/persons/:id", (req, res) => {
   res.json(person);
 });
 
+app.delete("/api/persons/:id", (req, res) => {
+  const id = req.params.id;
+
+  const initialSize = persons.length;
+
+  persons = persons.filter((p) => p.id != id);
+
+  if (initialSize == persons.length) {
+    return res.status(404).end(); // Not Found
+  }
+
+  res.status(204).end(); // No Content
+});
+
 app.get("/info", (req, res) => {
   res.send(
     `

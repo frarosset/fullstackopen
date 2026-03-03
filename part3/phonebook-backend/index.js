@@ -24,6 +24,8 @@ let persons = [
   },
 ];
 
+app.use(express.json());
+
 app.get("/api/persons", (req, res) => {
   res.json(persons);
 });
@@ -52,6 +54,28 @@ app.delete("/api/persons/:id", (req, res) => {
   }
 
   res.status(204).end(); // No Content
+});
+
+const generateId = () => Math.round(Math.random() * 1000000000);
+
+app.post("/api/persons", (req, res) => {
+  const data = req.body;
+
+  if (!data.name || !data.number) {
+    return res.status(400).json({
+      error: "content missing",
+    });
+  }
+
+  const person = {
+    id: generateId(),
+    name: data.name,
+    number: data.number,
+  };
+
+  persons = [...persons, person];
+
+  res.json(person);
 });
 
 app.get("/info", (req, res) => {

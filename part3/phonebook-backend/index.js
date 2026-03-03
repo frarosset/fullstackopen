@@ -61,9 +61,21 @@ const generateId = () => Math.round(Math.random() * 1000000000);
 app.post("/api/persons", (req, res) => {
   const data = req.body;
 
-  if (!data.name || !data.number) {
+  if (!data.name) {
     return res.status(400).json({
-      error: "content missing",
+      error: "name missing",
+    });
+  }
+
+  if (!data.number) {
+    return res.status(400).json({
+      error: "number missing",
+    });
+  }
+
+  if (persons.find((p) => p.name == data.name)) {
+    return res.status(400).json({
+      error: "name must be unique",
     });
   }
 

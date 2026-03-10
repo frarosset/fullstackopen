@@ -1,7 +1,10 @@
 const express = require("express");
 const morgan = require("morgan");
+const cors = require("cors");
 
 const app = express();
+
+app.use(cors());
 
 let persons = [
   {
@@ -49,7 +52,7 @@ const tinyBodyFormat = (tokens, req, res) =>
 
 app.use(
   // This prints the body for all requests
-  morgan(":method :url :status :res[content-length] - :response-time ms :body"),
+  // morgan(":method :url :status :res[content-length] - :response-time ms :body"),
 
   // This prints body only for POST requests
   morgan((tokens, req, res) => {

@@ -2,3 +2,9 @@ DELETE http://localhost:3001/api/persons/10
 
 ###
 DELETE http://localhost:3001/api/persons/3
+
+###
+DELETE https://phonebook-fant.onrender.com/api/persons/10
+
+###
+DELETE https://phonebook-fant.onrender.com/api/persons/3

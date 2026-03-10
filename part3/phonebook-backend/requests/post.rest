@@ -17,3 +17,24 @@ POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {"name": "No Number"}
+
+###
+POST https://phonebook-fant.onrender.com/api/persons
+Content-Type: application/json
+
+{"name": "New Person", "number": "123456789"}
+
+###
+GET https://phonebook-fant.onrender.com/api/persons
+
+###
+POST https://phonebook-fant.onrender.com/api/persons
+Content-Type: application/json
+
+{"number": "000000000"}
+
+###
+POST https://phonebook-fant.onrender.com/api/persons
+Content-Type: application/json
+
+{"name": "No Number"}
